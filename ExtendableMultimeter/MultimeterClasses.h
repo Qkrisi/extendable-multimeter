@@ -15,10 +15,10 @@ namespace Multimeter
 	{
 		public:
 			virtual String Name() {return String("Nothing");}
-      virtual String Unit() {return String("");}
+			virtual String Unit() {return String("");}
 			inline virtual Result OnMeasure();
 			inline virtual void OnStart();
-      inline virtual void Reset();
+			inline virtual void Reset();
 		protected:
 			inline Result GetResult(float Value);
 		private:
