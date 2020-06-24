@@ -25,19 +25,79 @@ namespace Multimeter
 			float lastValue;
 	};
 	
-	class Resistance : public Measurement
+	class ResistanceFork : public Measurement
+	{
+		protected:
+			const int ResistancePin = 4;
+			const int Vin = 5;
+			const float R1 = 10000;
+	};
+	
+	class Resistance : public ResistanceFork
 	{
 		public:
 			String Name() override {return String("Resistance");}
 			String Unit() override {return String("Ω");}
 			inline Result OnMeasure() override;
+	};
+	
+	class Current : public ResistanceFork
+	{
+		public:
+			String Name() override {return String("Current");}
+			String Unit() override {return String("A");}
+			inline Result OnMeasure() override;
+	};
+	
+	class DiodeVoltage : public ResistanceFork
+	{
+		public:
+			String Name() override {return String("Diode Voltage");}
+			String Unit() override {return String("V");}
+			inline Result OnMeasure() override;
+	};
+	
+	class Conductance : public ResistanceFork
+	{
+		public:
+			String Name() override {return String("Conductance");}
+			String Unit() override {return String("S");}
+			inline Result OnMeasure() override;
+	};
+	
+	class hFe : public ResistanceFork
+	{
+		public:
+			String Name() override {return String("Tranzistor gain");}
+			inline Result OnMeasure() override;
 		private:
-			int ResistancePin = 4;
-			int raw = 0;
-			int Vin = 5;
-			float Vout = 0;
-			float R1 = 10000;
-			float buffer = 0;
+			int CollectorPin = 3;
+	};
+	
+	class Voltage : public Measurement
+	{
+		public:
+			String Name() override {return String("Voltage");}
+			String Unit() override {return String("V");}
+			inline Result OnMeasure() override;
+		private:
+			int VoltagePin = 1;
+			const float vpp = 0.01173020527859237537;
+	};
+	
+	class Capacitance : public Measurement
+	{
+		public:
+			String Name() override {return String("Capacitance");}
+			inline String Unit() override;
+			inline Result OnMeasure() override;
+			inline void OnStart() override;
+		private:
+			int CapacitancePin = 2;
+			int ChargePin = 9;
+			int DischargePin = 8;
+			float ResistorValue = 10000.0F;
+			float MicroFarads;
 	};
 }
 

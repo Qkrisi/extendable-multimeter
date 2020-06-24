@@ -10,7 +10,7 @@ int lastStateCLK;
 String currentDir ="";
 unsigned long lastButtonPress = 0;
 
-Measurement* measurements[] = {new Resistance()};
+Measurement* measurements[] = {new Resistance(), new Current(), new DiodeVoltage(), new Conductance(), new hFe(), new Voltage(), new Capacitance()};
 int measureIndex = 0;
 
 void setup(){
@@ -59,7 +59,7 @@ void HandleMeasurement()
   {
     Serial.print(currentMeasure->Name());
     Serial.print(": ");
-    Serial.print(result.Value);
+    Serial.print(result.Value, 5);
     Serial.println(currentMeasure->Unit());
     return;
   }
