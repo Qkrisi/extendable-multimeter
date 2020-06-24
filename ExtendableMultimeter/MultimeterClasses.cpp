@@ -123,7 +123,7 @@ Result hFe::OnMeasure()
 		float buffer = raw * Vin;
 		float Vout = (buffer)/1024.0;
 		buffer = (Vin/Vout) -1;
-		return Result((Vout/(R1*buffer))/Ib);
+		return Measurement::GetResult((Vout/(R1*buffer))/Ib);
 	}
 	return Result(false);
 }
