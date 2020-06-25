@@ -1,6 +1,5 @@
 #include "Arduino.h"
 #include "MultimeterClasses.h"
-#include <Adafruit_Sensor.h>
 
 using namespace Multimeter;
 
