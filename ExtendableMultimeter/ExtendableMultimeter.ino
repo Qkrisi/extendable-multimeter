@@ -10,7 +10,7 @@ int lastStateCLK;
 String currentDir ="";
 unsigned long lastButtonPress = 0;
 
-Measurement* measurements[] = {new Resistance(), new Current(), new DiodeVoltage(), new Conductance(), new hFe(), new Voltage(), new Capacitance()};
+Measurement* measurements[] = {new Resistance(), new Current(), new DiodeVoltage(), new Conductance(), new hFe(), new Voltage(), new Capacitance(), new Temperature()};
 int measureIndex = 0;
 
 void setup(){

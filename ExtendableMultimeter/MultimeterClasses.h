@@ -1,6 +1,8 @@
 #ifndef MULTIMETER_CLASSES
 #define MULTIMETER_CLASSES
 
+#include <DHT.h>
+
 namespace Multimeter
 {
 	class Result
@@ -98,6 +100,17 @@ namespace Multimeter
 			int DischargePin = 8;
 			float ResistorValue = 10000.0F;
 			float MicroFarads;
+	};
+	
+	class Temperature : public Measurement
+	{
+		public:
+			String Name() override {return String("Temperature");}
+			String Unit() override {return String("°C");}
+			inline Result OnMeasure() override;
+			inline void OnStart() override;
+		private:
+			DHT dht = DHT(10, 11);			//DHT(TemperaturePin, DHTType)
 	};
 }
 

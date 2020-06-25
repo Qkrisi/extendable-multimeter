@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "MultimeterClasses.h"
+#include <Adafruit_Sensor.h>
 
 using namespace Multimeter;
 
@@ -165,3 +166,15 @@ String Capacitance::Unit()
 	return MicroFarads > 1 ? String(" microfarads") : String(" nanofarads");
 }
 #pragma endregion Capacitance
+
+#pragma region Temperature
+void Temperature::OnStart()
+{
+	dht.begin();
+}
+
+Result Temperature::OnMeasure()
+{
+	return Measurement::GetResult(dht.readTemperature());
+}
+#pragma endregion Temperature
