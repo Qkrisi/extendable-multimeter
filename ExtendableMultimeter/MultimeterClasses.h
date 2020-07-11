@@ -2,15 +2,28 @@
 #define MULTIMETER_CLASSES
 
 #include <DHT.h>
+#include "TSGraphics.h"
 
 namespace Multimeter
 {
+	class Button;
+	class Symbol;
+	class Move;
+	
 	class Result
 	{
 		public:
 			bool Success;
 			float Value;
 			inline Result(bool success, float value);
+	};
+	
+	class ValuePair
+	{
+		public:
+			String Value;
+			String Unit;
+			inline ValuePair(String value, String unit);
 	};
 	
 	class Measurement
@@ -21,6 +34,7 @@ namespace Multimeter
 			inline virtual Result OnMeasure();
 			inline virtual void OnStart();
 			inline virtual void Reset();
+			inline virtual Symbol getSymbol();
 		protected:
 			inline Result GetResult(float Value);
 		private:
@@ -40,6 +54,7 @@ namespace Multimeter
 		public:
 			String Name() override {return String("Resistance");}
 			String Unit() override {return String("Ω");}
+			inline Symbol getSymbol() override;
 			inline Result OnMeasure() override;
 	};
 	
@@ -48,6 +63,7 @@ namespace Multimeter
 		public:
 			String Name() override {return String("Current");}
 			String Unit() override {return String("A");}
+			inline Symbol getSymbol() override;
 			inline Result OnMeasure() override;
 	};
 	
@@ -56,6 +72,7 @@ namespace Multimeter
 		public:
 			String Name() override {return String("Diode Voltage");}
 			String Unit() override {return String("V");}
+			inline Symbol getSymbol() override;
 			inline Result OnMeasure() override;
 	};
 	
@@ -64,6 +81,7 @@ namespace Multimeter
 		public:
 			String Name() override {return String("Conductance");}
 			String Unit() override {return String("S");}
+			inline Symbol getSymbol() override;
 			inline Result OnMeasure() override;
 	};
 	
@@ -71,6 +89,7 @@ namespace Multimeter
 	{
 		public:
 			String Name() override {return String("Tranzistor gain");}
+			inline Symbol getSymbol() override;
 			inline Result OnMeasure() override;
 		private:
 			int CollectorPin = 3;
@@ -81,6 +100,7 @@ namespace Multimeter
 		public:
 			String Name() override {return String("Voltage");}
 			String Unit() override {return String("V");}
+			inline Symbol getSymbol() override;
 			inline Result OnMeasure() override;
 		private:
 			int VoltagePin = 1;
@@ -92,6 +112,7 @@ namespace Multimeter
 		public:
 			String Name() override {return String("Capacitance");}
 			inline String Unit() override;
+			inline Symbol getSymbol() override;
 			inline Result OnMeasure() override;
 			inline void OnStart() override;
 		private:
@@ -107,6 +128,7 @@ namespace Multimeter
 		public:
 			String Name() override {return String("Temperature");}
 			String Unit() override {return String("°C");}
+			inline Symbol getSymbol() override;
 			inline Result OnMeasure() override;
 			inline void OnStart() override;
 		private:

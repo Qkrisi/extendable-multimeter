@@ -9,6 +9,12 @@ Result::Result(bool success, float value = 0)
 	Success = success;
 	Value = value;
 }
+
+ValuePair::ValuePair(String value, String unit)
+{
+	Value = value;
+	Unit = unit;
+}
 #pragma endregion Final
 
 #pragma region BaseClass
@@ -51,7 +57,7 @@ Result Resistance::OnMeasure()
 		float buffer = raw * Vin;
 		float Vout = (buffer)/1024.0;
 		buffer = (Vin/Vout) -1;
-		return Measurement::GetResult(R1 * buffer);
+		return GetResult(R1 * buffer);
 	}
 	return Result(false);
 }
@@ -67,7 +73,7 @@ Result Current::OnMeasure()
 		float Vout = (buffer)/1024.0;
 		buffer = (Vin/Vout) -1;
 		float R2 = R1*buffer;
-		return Measurement::GetResult(Vout/R2);
+		return GetResult(Vout/R2);
 	}
 	return Result(false);
 }
@@ -80,7 +86,7 @@ Result DiodeVoltage::OnMeasure()
 	if(raw)
 	{
 		float buffer = raw * Vin;
-		return Measurement::GetResult((buffer)/1024.0);
+		return GetResult((buffer)/1024.0);
 	}
 	return Result(false);
 }
@@ -95,7 +101,7 @@ Result Conductance::OnMeasure()
 		float buffer = raw * Vin;
 		float Vout = (buffer)/1024.0;
 		buffer = (Vin/Vout) -1;
-		return Measurement::GetResult(1/(R1 * buffer));
+		return GetResult(1/(R1 * buffer));
 	}
 	return Result(false);
 }
@@ -123,7 +129,7 @@ Result hFe::OnMeasure()
 		float buffer = raw * Vin;
 		float Vout = (buffer)/1024.0;
 		buffer = (Vin/Vout) -1;
-		return Measurement::GetResult((Vout/(R1*buffer))/Ib);
+		return GetResult((Vout/(R1*buffer))/Ib);
 	}
 	return Result(false);
 }
@@ -133,7 +139,7 @@ Result hFe::OnMeasure()
 #pragma region Voltage
 Result Voltage::OnMeasure()
 {
-	return Measurement::GetResult(analogRead(VoltagePin)*vpp);
+	return GetResult(analogRead(VoltagePin)*vpp);
 }
 #pragma endregion Voltage
 
@@ -151,7 +157,7 @@ Result Capacitance::OnMeasure()
 	while(analogRead(CapacitancePin) < 648 ){}
 	unsigned long ElapsedTime = millis()-StartTime;
 	MicroFarads = ((float)ElapsedTime / ResistorValue) * 1000;
-	Result toReturn = Measurement::GetResult(MicroFarads > 1 ? (long)MicroFarads : (long)(MicroFarads*1000.0));
+	Result toReturn = GetResult(MicroFarads > 1 ? (long)MicroFarads : (long)(MicroFarads*1000.0));
 	digitalWrite(ChargePin, LOW);
 	pinMode(DischargePin, OUTPUT);
 	digitalWrite(DischargePin, LOW);
@@ -174,6 +180,6 @@ void Temperature::OnStart()
 
 Result Temperature::OnMeasure()
 {
-	return Measurement::GetResult(dht.readTemperature());
+	return GetResult(dht.readTemperature());
 }
 #pragma endregion Temperature
